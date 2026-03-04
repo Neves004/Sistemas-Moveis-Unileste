@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Image, Text, ScrollView, Alert } from 'react-native';
 import { styles } from './styles';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
@@ -7,9 +7,11 @@ import { FilterStatus } from '@/types/FilterStatus';
 import { Card } from '@/components/Card';
 import { Search, SlidersHorizontal } from "lucide-react-native";
 import { FlatList } from 'react-native';
+import { useEffect, useState } from 'react';
 
-export interface Contato {
-  id: number;
+
+export type Contato = {
+  id: string;
   title: string;
   status: number;
   desc: string;
@@ -17,16 +19,33 @@ export interface Contato {
 }
 
 export default function Home() {
-  var contatos = [] as Contato[];
+  const ContatosData: Contato[] = [
+    { id: "1", title: 'Desenvolvimento de aplicativo de loja online', status: FilterStatus.APROVADO, valor: 22300, desc: 'Soluções Tecnologicas Beta' },
+    { id: "2", title: 'Consultoria em marketing digital', status: FilterStatus.RASCUNHO, valor: 4000, desc: 'Marketing Wizards' },
+    { id: "3", title: 'Serviços de SEO', status: FilterStatus.ENVIADO, valor: 3500, desc: 'SEO Masters' },
+    { id: "4", title: 'Criação de conteúdo', status: FilterStatus.RASCUNHO, valor: 2500, desc: 'Content Creators' },
+    { id: "5", title: 'Gestão de redes sociais', status: FilterStatus.RECUSADO, valor: 1800, desc: 'Social Experts' },
+    { id: "6", title: 'Design de interfaces', status: FilterStatus.APROVADO, valor: 5200, desc: 'UI/UX Designers' },
+  ];
 
-  var contato1 = {id:1, title:'Desenvolvimento de aplicativo de loja online', status:FilterStatus.APROVADO, valor:22300, desc:'Soluções Tecnologicas Beta'} as Contato;
-  var contato2 = {id:1, title:'Desenvolvimento de aplicativo de loja online', status:FilterStatus.APROVADO, valor:22300, desc:'Soluções Tecnologicas Beta'} as Contato;
-  var contato3 = {id:1, title:'Desenvolvimento de aplicativo de loja online', status:FilterStatus.APROVADO, valor:22300, desc:'Soluções Tecnologicas Beta'} as Contato;
-  var contato4 = {id:1, title:'Desenvolvimento de aplicativo de loja online', status:FilterStatus.APROVADO, valor:22300, desc:'Soluções Tecnologicas Beta'} as Contato;
-  var contato5 = {id:1, title:'Desenvolvimento de aplicativo de loja online', status:FilterStatus.APROVADO, valor:22300, desc:'Soluções Tecnologicas Beta'} as Contato;
-  var contato6 = {id:1, title:'Desenvolvimento de aplicativo de loja online', status:FilterStatus.APROVADO, valor:22300, desc:'Soluções Tecnologicas Beta'} as Contato;
+  let [contatos, setContatos] = useState<Contato[]>(ContatosData);
+  let [text, setText] = useState("");
 
+  function StatusName(status:FilterStatus):string{
+    switch(status){
+      case FilterStatus.APROVADO:
+        return "Aprovado";
+      case FilterStatus.ENVIADO:
+        return "Enviado";
+      case FilterStatus.RASCUNHO:
+        return "Rascunho";
+      case FilterStatus.RECUSADO:
+        return "Recusado";
+    }
+
+  }
   return (
+
 
     <View style={styles.container}>
       <View style={styles.flex}>
@@ -43,18 +62,24 @@ export default function Home() {
       <View style={styles.form}>
         <View style={styles.inputArea}>
           <Search style={styles.searchIcon} color="#aaa" size={20} />
-          <Input style={styles.input} placeholder="Título ou cliente"/>
+          <Input value={text} onChangeText={(text) => {
+            setText(text);
+          }} style={styles.input} placeholder="Título ou cliente" />
         </View>
         <View style={styles.slidershIcon}>
-        <SlidersHorizontal style={{marginTop:'auto', marginBottom:'auto'}} color="#6a46eb" size={20} />
+          <SlidersHorizontal style={{ marginTop: 'auto', marginBottom: 'auto' }} color="#6a46eb" size={20} />
         </View>
       </View>
 
-      <FlatList
-      data={contatos}
-      renderItem={({item}) => <Card title={item.title} status={item.status} valor={item.valor} desc={item.desc}></Card>}
-      keyExtractor={item => item.id}
-      />
+      <View style={styles.content}>
+        <FlatList
+          data={contatos}
+          renderItem={({ item }) => <Card onPress={() =>
+            Alert.alert(item.title, ` \n Empresa: ${item.desc} \n Valor:R$ ${item.valor} \n Status: ${StatusName(item.status)} `)
+          } title={item.title} status={item.status} valor={item.valor} desc={item.desc}></Card>}
+          keyExtractor={(item, index) => item.id + index}
+        />
+      </View>
 
 
 
