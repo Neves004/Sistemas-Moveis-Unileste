@@ -31,8 +31,8 @@ export default function Home() {
   let [contatos, setContatos] = useState<Contato[]>(ContatosData);
   let [text, setText] = useState("");
 
-  function StatusName(status:FilterStatus):string{
-    switch(status){
+  function StatusName(status: FilterStatus): string {
+    switch (status) {
       case FilterStatus.APROVADO:
         return "Aprovado";
       case FilterStatus.ENVIADO:
@@ -44,6 +44,7 @@ export default function Home() {
     }
 
   }
+
   return (
 
 
@@ -54,17 +55,35 @@ export default function Home() {
           <Text style={styles.text}> Você tem 1 item em rascunho </Text>
         </View>
         <View style={styles.right}>
-          <Button title="+ Novo" />
+          <Button onPress={} title="+ Novo" />
         </View>
       </View>
 
 
+
       <View style={styles.form}>
-        <View style={styles.inputArea}>
-          <Search style={styles.searchIcon} color="#aaa" size={20} />
-          <Input value={text} onChangeText={(text) => {
-            setText(text);
-          }} style={styles.input} placeholder="Título ou cliente" />
+        <View style={styles.inputs}>
+          <View style={styles.inputArea}>
+            <Search style={styles.searchIcon} color="#aaa" size={20} />
+            <Input value={text} onChangeText={(text) => {
+              setText(text);
+            }} style={styles.input} placeholder="Título" />
+          </View>
+          <View style={styles.inputArea}>
+            <Search style={styles.searchIcon} color="#aaa" size={20} />
+            <Input value={text} onChangeText={(text) => {
+              setText(text);
+            }} style={styles.input} placeholder="Cliente" />
+          </View>
+
+          <View style={styles.inputArea}>
+            <Search style={styles.searchIcon} color="#aaa" size={20} />
+            <Input value={text} onChangeText={(text) => {
+              setText(text);
+            }} style={styles.input} placeholder="Descrição" />
+          </View>
+
+
         </View>
         <View style={styles.slidershIcon}>
           <SlidersHorizontal style={{ marginTop: 'auto', marginBottom: 'auto' }} color="#6a46eb" size={20} />

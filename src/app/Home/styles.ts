@@ -80,6 +80,13 @@ export const styles = StyleSheet.create({
     marginRight: "auto",
   },
 
+  inputs: {
+    display: 'flex', 
+    flexDirection: 'column',
+    flexGrow:1,
+    paddingLeft: 8,
+  },
+
   searchIcon: {
     verticalAlign: 'middle',
     marginTop: 'auto',
