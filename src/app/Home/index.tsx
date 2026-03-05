@@ -8,6 +8,7 @@ import { Card } from '@/components/Card';
 import { Search, SlidersHorizontal } from "lucide-react-native";
 import { FlatList } from 'react-native';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export type Contato = {
@@ -17,8 +18,6 @@ export type Contato = {
   desc: string;
   valor: number;
 }
-
-
 
 export default function Home() {
   const ContatosData: Contato[] = [
@@ -47,6 +46,32 @@ export default function Home() {
 
   }
 
+
+async function salvarContatos(lista: Contato[]) {
+  try {
+    await AsyncStorage.setItem("contatos", JSON.stringify(lista));
+  } catch (error) {
+    console.log("Erro ao salvar contatos", error);
+  }
+}
+
+async function carregarContatos() {
+  try {
+    const dados = await AsyncStorage.getItem("contatos");
+
+    if (dados != null) {
+      setContatos(JSON.parse(dados));
+    }
+  } catch (error) {
+    console.log("Erro ao carregar contatos", error);
+  }
+}
+
+useEffect(() => {
+  carregarContatos();
+}, []);
+
+
   let [titulo, setTitulo] = useState("");
   let [desc, setDescricao] = useState("");
   let [valor, setValor] = useState("");
@@ -59,14 +84,17 @@ export default function Home() {
     }
 
     const novoContato: Contato = {
-      id: String(contatos.length + 1),
+      id: String(Date.now()),
       title: titulo,
       desc: desc,
       valor: Number.parseFloat(valor),
       status: FilterStatus.RASCUNHO
     };
 
-    setContatos([...contatos, novoContato]);
+    const novaLista = [...contatos, novoContato];
+    setContatos(novaLista);
+
+    salvarContatos(novaLista);
 
     setTitulo("");
     setDescricao("");
