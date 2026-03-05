@@ -18,6 +18,8 @@ export type Contato = {
   valor: number;
 }
 
+
+
 export default function Home() {
   const ContatosData: Contato[] = [
     { id: "1", title: 'Desenvolvimento de aplicativo de loja online', status: FilterStatus.APROVADO, valor: 22300, desc: 'Soluções Tecnologicas Beta' },
@@ -45,6 +47,32 @@ export default function Home() {
 
   }
 
+  let [titulo, setTitulo] = useState("");
+  let [desc, setDescricao] = useState("");
+  let [valor, setValor] = useState("");
+
+  function criarContato() {
+
+    if (!titulo || !desc || !valor) {
+      Alert.alert("Erro", "Preencha todos os campos");
+      return;
+    }
+
+    const novoContato: Contato = {
+      id: String(contatos.length + 1),
+      title: titulo,
+      desc: desc,
+      valor: Number.parseFloat(valor),
+      status: FilterStatus.RASCUNHO
+    };
+
+    setContatos([...contatos, novoContato]);
+
+    setTitulo("");
+    setDescricao("");
+    setValor("");
+  }
+
   return (
 
 
@@ -55,7 +83,7 @@ export default function Home() {
           <Text style={styles.text}> Você tem 1 item em rascunho </Text>
         </View>
         <View style={styles.right}>
-          <Button onPress={} title="+ Novo" />
+          <Button onPress={criarContato} title="+ Novo" />
         </View>
       </View>
 
@@ -65,22 +93,22 @@ export default function Home() {
         <View style={styles.inputs}>
           <View style={styles.inputArea}>
             <Search style={styles.searchIcon} color="#aaa" size={20} />
-            <Input value={text} onChangeText={(text) => {
-              setText(text);
+            <Input value={titulo} onChangeText={(text) => {
+              setTitulo(text);
             }} style={styles.input} placeholder="Título" />
           </View>
           <View style={styles.inputArea}>
             <Search style={styles.searchIcon} color="#aaa" size={20} />
-            <Input value={text} onChangeText={(text) => {
-              setText(text);
+            <Input value={desc} onChangeText={(text) => {
+              setDescricao(text);
             }} style={styles.input} placeholder="Cliente" />
           </View>
 
           <View style={styles.inputArea}>
             <Search style={styles.searchIcon} color="#aaa" size={20} />
-            <Input value={text} onChangeText={(text) => {
-              setText(text);
-            }} style={styles.input} placeholder="Descrição" />
+            <Input value={valor} onChangeText={(text) => {
+              setValor(text);
+            }} style={styles.input} placeholder="Valor" />
           </View>
 
 
