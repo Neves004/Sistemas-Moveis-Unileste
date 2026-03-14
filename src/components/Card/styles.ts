@@ -18,7 +18,8 @@ export const styles = StyleSheet.create({
         color: '#000',
         fontSize: 20,
         fontWeight: '500',
-        padding: 5
+        padding: 1,
+        marginLeft: 5,
     },
 
     flexRow: {
@@ -27,7 +28,17 @@ export const styles = StyleSheet.create({
     },
 
     right: {
-        marginLeft:'auto'
+        marginLeft:'auto',
+        marginRight: 5,
+    },
+
+    buttons: {
+    flexDirection: 'row', 
+    justifyContent: 'flex-end', 
+    gap: 15, 
+    padding: 10, 
+    borderTopWidth: 1, 
+    borderTopColor: '#eee',
     },
 
     aprovado_view: {
