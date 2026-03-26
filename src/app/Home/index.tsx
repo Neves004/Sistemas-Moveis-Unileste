@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ModalContato } from '@/components/Modal';
 
-
 export type Contato = {
   id: string;
   title: string;
