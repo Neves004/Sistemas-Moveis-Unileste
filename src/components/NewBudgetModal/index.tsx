@@ -1,4 +1,3 @@
-import { TouchableOpacity, TouchableOpacityProps, Text } from "react-native";
 import { styles } from "./styles";
 import { View } from "react-native";
 import { ViewProps } from "react-native";
